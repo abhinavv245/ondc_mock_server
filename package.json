@@ -4,15 +4,16 @@
 	"private": false,
 	"packageManager": "npm@9.2.0",
 	"scripts": {
-		"dev": "NODE_OPTIONS='--max-old-space-size=4096' turbo run dev",
-		"ec2": "NODE_OPTIONS='--max-old-space-size=4096' turbo run ec2",
-		"test":"NODE_OPTIONS='--max-old-space-size=4096' turbo run test"
+		"dev": "cross-env NODE_OPTIONS=--max-old-space-size=4096 turbo run dev",
+		"ec2": "cross-env NODE_OPTIONS=--max-old-space-size=4096 turbo run ec2",
+		"test": "cross-env NODE_OPTIONS=--max-old-space-size=4096 turbo run test"
 	},
 	"workspaces": [
 		"apps/*",
 		"packages/*"
 	],
 	"devDependencies": {
+		"cross-env": "^7.0.3",
 		"turbo": "^1.12.4"
 	}
 }
