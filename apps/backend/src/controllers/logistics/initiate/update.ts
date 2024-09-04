@@ -1,16 +1,11 @@
 import { NextFunction, Request, Response } from "express";
 import {
-	LOGISTICS_BAP_MOCKSERVER_URL,
 	send_response,
-	MOCKSERVER_ID,
-	redis,
 	send_nack,
-	createAuthHeader,
 	redisFetchFromServer,
 } from "../../../lib/utils";
 import { v4 as uuidv4 } from "uuid";
-import { timeStamp } from "console";
-import { on } from "events";
+
 
 export const initiateUpdateController = async (
 	req: Request,
@@ -18,7 +13,7 @@ export const initiateUpdateController = async (
 	next: NextFunction
 ) => {
 	try {
-		const { update_targets, transactionId } = req.body;
+		const {  transactionId } = req.body;
 		const onConfirm = await redisFetchFromServer("on_confirm", transactionId);
 		if (!onConfirm) {
 			return send_nack(res, "On Confirm doesn't exist");

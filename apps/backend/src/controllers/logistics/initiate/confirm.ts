@@ -1,19 +1,12 @@
 import { NextFunction, Request, Response } from "express";
 import {
-	responseBuilder_logistics,
-	LOGISTICS_EXAMPLES_PATH,
-	MOCKSERVER_ID,
 	send_response,
 	redis,
 	send_nack,
-	Item,
 } from "../../../lib/utils";
 
-import fs from "fs";
-import path from "path";
-import YAML from "yaml";
 import { v4 as uuidv4 } from "uuid";
-import { update } from "lodash";
+
 
 export const initiateConfirmController = async (
 	req: Request,
@@ -48,8 +41,12 @@ export const initiateConfirmController = async (
 		parsedTransaction = transaction.map((ele) => {
 			return JSON.parse(ele as string);
 		});
-		const Init = parsedTransaction[0].request;
-		if (Object.keys(onInit).includes("error")) {
+	
+		const initTransaction = parsedTransaction.find(
+			(tx) => tx?.request?.context && tx?.request?.context?.action === 'init'
+		);
+   const Init = initTransaction.request
+		if (Object.keys(Init).includes("error")) {
 			return send_nack(res, "Init had errors");
 		}
 		var newTime = new Date().toISOString();
@@ -204,6 +201,7 @@ export const initiateConfirmController = async (
 				},
 			},
 		};
+
     await send_response(res, next, confirm, transactionId, "confirm");
 
 	} catch (error) {

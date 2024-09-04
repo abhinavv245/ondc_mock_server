@@ -1,7 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import {
 	responseBuilder,
-	responseBuilder_logistics,
 	send_nack,
 	LOGISTICS_EXAMPLES_PATH,
 	redis,
@@ -13,7 +12,7 @@ import {
 import fs from "fs";
 import path from "path";
 import YAML from "yaml";
-import { ca } from "date-fns/locale";
+
 interface Item_payment_id {
 	[key: string]: string[];
 }
@@ -58,7 +57,7 @@ export const cancelController = async (
 					break;
 			}
 
-			return responseBuilder_logistics(
+			return responseBuilder(
 				res,
 				next,
 				response.value.context,
@@ -309,7 +308,7 @@ const cancelRequest = async (
 			};
 		}
 
-		return responseBuilder_logistics(
+		return responseBuilder(
 			res,
 			next,
 			context,

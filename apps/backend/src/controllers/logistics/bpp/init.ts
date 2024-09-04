@@ -1,13 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import {
-	responseBuilder_logistics,
-	LOGISTICS_EXAMPLES_PATH,
-	Fulfillment,
-	quoteCreator,
-	redis,
-	send_nack,
-	Item,
-	Breakup,
+	responseBuilder,
+	LOGISTICS_EXAMPLES_PATH
 } from "../../../lib/utils";
 import fs from "fs";
 import path from "path";
@@ -23,6 +17,7 @@ export const initController = async (
 	next: NextFunction
 ) => {
 	const { scenario } = req.query;
+	
 	const sandboxMode = res.getHeader("mode") === "sandbox";
 
 	if (!sandboxMode) {
@@ -63,14 +58,14 @@ export const initController = async (
 					}
 				// If the file does not exist, do not break; instead, continue to the default case
 				default:
-					file = path.join(file, "on_init_air.yaml");
+					file = path.join(file, "on_init_air_kyc_success.yaml");
 			}
 			if (!file) {
 				return null; // Return null or handle this case as needed
 			}
 			const fileContent = fs.readFileSync(file, "utf8");
 			onInit = YAML.parse(fileContent);
-			return responseBuilder_logistics(
+			return responseBuilder(
 				res,
 				next,
 				onInit.value.context,
@@ -281,7 +276,7 @@ export const initController = async (
 					},
 				},
 			};
-			return responseBuilder_logistics(
+			return responseBuilder(
 				res,
 				next,
 				onInit.context,

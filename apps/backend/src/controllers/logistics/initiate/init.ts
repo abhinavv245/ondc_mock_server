@@ -1,16 +1,11 @@
 import { NextFunction, Request, Response } from "express";
 import {
-	LOGISTICS_BAP_MOCKSERVER_URL,
-	LOGISTICS_EXAMPLES_PATH,
 	MOCKSERVER_ID,
 	send_response,
 	redis,
 	send_nack,
 	Item,
 } from "../../../lib/utils";
-import fs from "fs";
-import path from "path";
-import YAML from "yaml";
 import { v4 as uuidv4 } from "uuid";
 
 export const initiateInitController = async (
@@ -19,7 +14,6 @@ export const initiateInitController = async (
 	next: NextFunction
 ) => {
 	try {
-		console.log(req.body);
 		const { transactionId } = req.body;
 		const transactionKeys = await redis.keys(`${transactionId}-*`);
 		const ifTransactionExist = transactionKeys.filter((e) =>

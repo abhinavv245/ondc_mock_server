@@ -3,7 +3,6 @@ import {
 	send_nack,
 	redis,
 	responseBuilder,
-	responseBuilder_logistics,
 	LOGISTICS_EXAMPLES_PATH,
 	Item,
 } from "../../../lib/utils";
@@ -77,7 +76,7 @@ export const updateController = async (
 			const fileContent = fs.readFileSync(file, "utf8");
 			const response = YAML.parse(fileContent);
 
-			return responseBuilder_logistics(
+			return responseBuilder(
 				res,
 				next,
 				response.value.context,
@@ -166,7 +165,7 @@ export const updateController = async (
 					tags: onConfirm.message.order.tags,
 				},
 			};
-			return responseBuilder_logistics(
+			return responseBuilder(
 				res,
 				next,
 				context,

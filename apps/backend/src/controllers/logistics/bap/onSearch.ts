@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import {
-	responseBuilder_logistics,
+	responseBuilder,
 	LOGISTICS_EXAMPLES_PATH,
 } from "../../../lib/utils";
 import fs from "fs";
@@ -12,9 +12,7 @@ export const onSearchController = async (
 	res: Response,
 	next: NextFunction
 ) => {
-	const sandboxMode = res.getHeader("mode") === "sandbox";
 
-	if (!sandboxMode) {
 		try {
 			let domain = req.body.context.domain;
 			let init;
@@ -47,7 +45,7 @@ export const onSearchController = async (
 					init = YAML.parse(file.toString());
 					break;
 			}
-			return responseBuilder_logistics(
+			return responseBuilder(
 				res,
 				next,
 				init.value.context,
@@ -61,6 +59,4 @@ export const onSearchController = async (
 		} catch (error) {
 			next(error);
 		}
-	} else {
-	}
 };

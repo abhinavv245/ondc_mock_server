@@ -3,7 +3,7 @@ import fs from "fs";
 import path from "path";
 import YAML from "yaml";
 
-import { responseBuilder_logistics, LOGISTICS_EXAMPLES_PATH } from "../../../lib/utils";
+import { responseBuilder, LOGISTICS_EXAMPLES_PATH } from "../../../lib/utils";
 
 // function getRandomFile(directory: string): string | null {
 // 	const files = fs.readdirSync(directory);
@@ -26,7 +26,6 @@ export const onConfirmController = (
 ) => {
   const sandboxMode = res.getHeader("mode") === "sandbox";
   const { scenario } = req.query;
-  if(!sandboxMode){
     try {
       const domain = req.body.context.domain;
 			let directory: string;
@@ -70,7 +69,7 @@ export const onConfirmController = (
 			const fileContent = fs.readFileSync(file, "utf8");
 			const response = YAML.parse(fileContent);
 
-			return responseBuilder_logistics(
+			return responseBuilder(
 				res,
 				next,
 				response.value.context,
@@ -84,7 +83,4 @@ export const onConfirmController = (
     } catch (error) {
       return next(error)
     }
-  }else{
-
-  }
 };

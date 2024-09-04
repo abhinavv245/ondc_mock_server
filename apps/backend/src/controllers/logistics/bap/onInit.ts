@@ -1,24 +1,24 @@
 import { NextFunction, Request, Response } from "express";
 import {
-	responseBuilder_logistics,
+	responseBuilder,
 	LOGISTICS_EXAMPLES_PATH,
 } from "../../../lib/utils";
 
 import fs from "fs";
 import path from "path";
 import YAML from "yaml";
+
 export const onInitController = (
 	req: Request,
 	res: Response,
 	next: NextFunction
 ) => {
-	const sandboxMode = res.getHeader("mode") === "sandbox";
-	if (!sandboxMode) {
+
 		try {
 			let domain = req.body.context.domain;
 			let confirm;
 			let error = req.body.error;
-			if (error === undefined) {
+			
 				switch (domain) {
 					case "ONDC:LOG10":
 						var file = fs.readFileSync(
@@ -48,7 +48,7 @@ export const onInitController = (
 						confirm = YAML.parse(file.toString());
 						break;
 				}
-				return responseBuilder_logistics(
+				return responseBuilder(
 					res,
 					next,
 					confirm.value.context,
@@ -59,10 +59,8 @@ export const onInitController = (
 					`confirm`,
 					"logistics"
 				);
-			}
+			
 		} catch (error) {
 			return next(error);
 		}
-	} else {
-	}
 };

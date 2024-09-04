@@ -1,13 +1,9 @@
 import { NextFunction, Request, Response } from "express";
 import {
   send_response,
-  redis,
   send_nack,
-  createAuthHeader,
-  logger,
   redisFetchFromServer,
 } from "../../../lib/utils";
-import axios, { AxiosError } from "axios";
 import { v4 as uuidv4 } from "uuid";
 
 export const initiateCancelController = async (

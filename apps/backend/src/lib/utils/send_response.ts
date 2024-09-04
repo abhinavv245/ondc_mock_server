@@ -18,7 +18,7 @@ async function send_response(
 ) {
 	try {
 		const { context } = res_obj;
-		if(bpp_uri === "")
+		if (bpp_uri === "")
 			bpp_uri = context.bpp_uri || res_obj.bpp_uri;
 
 		// res_obj.context.bpp_uri = bpp_uri
@@ -40,10 +40,11 @@ async function send_response(
 		}
 
 		const uri = `${bpp_uri}/${action}${scenario ? `?scenario=${scenario}` : ""}`
+		
 		const response = await axios.post(uri, res_obj, {
 			headers: { ...headers },
 		});
-
+		
 		await redis.set(
 			`${transaction_id}-${action}-from-server`,
 			JSON.stringify({
@@ -82,7 +83,7 @@ function send_nack(res: Response, message: string) {
 	});
 }
 
-function send_ack(res:Response){
+function send_ack(res: Response) {
 	return res.json({
 		message: {
 			ack: {
@@ -91,4 +92,4 @@ function send_ack(res:Response){
 		},
 	});
 }
-export { send_response, send_nack ,send_ack};
+export { send_response, send_nack, send_ack };

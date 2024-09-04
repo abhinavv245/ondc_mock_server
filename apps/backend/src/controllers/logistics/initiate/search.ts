@@ -9,7 +9,7 @@ import fs from "fs";
 import path from "path";
 import YAML from "yaml";
 import { v4 as uuidv4 } from "uuid";
-import { schedule } from "node-cron";
+
 
 const getFutureDates = (days: number): string[] => {
 	const dates: string[] = [];
@@ -68,7 +68,6 @@ export const initiateSearchController = async (
 		}
 		const transaction_id = uuidv4();
 		var newTime = new Date().toISOString();
-		var date = new Date();
 		var startTime = new Date();
 		startTime.setDate(startTime.getDate() + 1);
 		var endTime = new Date();

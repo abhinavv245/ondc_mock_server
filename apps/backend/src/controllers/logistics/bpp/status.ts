@@ -5,18 +5,15 @@ import YAML from "yaml";
 
 import {
 	responseBuilder,
-	send_nack,
 	LOGISTICS_EXAMPLES_PATH,
-	redis,
 	Item,
 	Fulfillment,
 	Stop,
 	Payment,
 	SettlementDetails,
 	redisFetchFromServer,
-	responseBuilder_logistics,
 } from "../../../lib/utils";
-import { on } from "events";
+
 
 function getRandomFile(directory: string): string | null {
 	const files = fs.readdirSync(directory);
@@ -77,7 +74,7 @@ export const statusController = async (
 			const fileContent = fs.readFileSync(file, "utf8");
 			const response = YAML.parse(fileContent);
 
-			return responseBuilder_logistics(
+			return responseBuilder(
 				res,
 				next,
 				response.value.context,
@@ -147,7 +144,7 @@ export const statusController = async (
 					}
 				};
 			}
-			return responseBuilder_logistics(
+			return responseBuilder(
 				res,
 				next,
 				onStatus.context,

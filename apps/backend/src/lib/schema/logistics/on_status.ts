@@ -105,7 +105,7 @@ export const onStatusSchema = {
 						},
 						status: {
 							type: "string",
-							enum: ["In-progress", "Cancelled"],
+							enum: ["In-progress", "Cancelled","Accepted"],
 						},
 						cancellation: {
 							type: "object",
